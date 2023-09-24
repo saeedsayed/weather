@@ -11,7 +11,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
-    color: antiquewhite;
+    color:#fafafa;
+    background-color: #767d7d;
     overflow: hidden;
     transition: .4s;
     -webkit-transition: .4s;
