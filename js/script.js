@@ -11,6 +11,7 @@ let inputSearch = document.getElementById('inputField')
 let searchBtn = document.getElementById('searchBtn')
 let searchListItems = document.querySelectorAll('.search-list li')
 let searchList = document.querySelector('.search-list')
+let dateTime = document.getElementById('dateTime')
 let allCity = []
 let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?appid=64e138c149426df3a8b7a134d6f6a5f4&units=metric&q='
 
@@ -39,6 +40,7 @@ inputSearch.addEventListener("input", _ => {
         searchList.innerHTML = e
     } else {
         searchList.innerHTML = `
+        <li onclick='getWeather("${apiUrl}",this.textContent)'>Makkah Province</li>
         <li onclick='getWeather("${apiUrl}",this.textContent)'>cairo</li>
         <li onclick='getWeather("${apiUrl}",this.textContent)'>dubi</li>
         <li onclick='getWeather("${apiUrl}",this.textContent)'>alexandria</li>
@@ -110,6 +112,8 @@ function getWeather(url, city) {
             humidity.innerHTML = request.response.main.humidity + '%'
             wind.innerHTML = Math.round(request.response.wind.speed) + 'Km/h'
             pressure.innerHTML = request.response.main.pressure + 'mber'
+            dateTime.innerHTML = getTime(request.response.timezone)
+
         } else {
             mainTemp.innerHTML = `--°`
             feelLike.innerHTML = `--°`
@@ -119,6 +123,7 @@ function getWeather(url, city) {
             humidity.innerHTML = '--%'
             wind.innerHTML = '-Km/h'
             pressure.innerHTML = '----mber'
+            dateTime.innerHTML = '--/--/-- - --:--:--'
             document.body.style.backgroundImage = 'url(https://i.pinimg.com/564x/de/ec/47/deec47f53aa9c5ec74830f911f2de116.jpg)'
         }
     }
@@ -134,6 +139,12 @@ function getCity() {
     }
 }
 getCity()
+function getTime (timezone){
+    let currentTime = new Date()
+    let utc = currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000)
+    return new Date(utc + (3600000*(timezone/60/60))).toLocaleString()
+}
+
 
 
 
